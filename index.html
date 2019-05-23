@@ -1,77 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Examples</title>
-	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport"/>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<link href="http://itakeo.com/down/flex.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport"/>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="http://itakeo.com/down/flex.css" rel="stylesheet">
 </head>
 <style type="text/css">
-	*{margin: 0;padding: 0;box-sizing: border-box;}
-	.drawBox{width: 300px;height: 300px;border:1px solid #111;}
-	.drawBox div{ text-align: center; height: 33.333%; overflow: hidden;background: #ccc }
-	.drawBox div:nth-of-type(1){background: #ccc}
-	.drawBox div:nth-of-type(2){background: #c10}
-	.drawBox div:nth-of-type(3){background: #1a0}
-	.drawBox div:nth-of-type(4){background: #2e0}
-	.drawBox div:nth-of-type(5){background: #cd9}
-	.drawBox div:nth-of-type(6){background: #ab3}
-	.drawBox div:nth-of-type(7){background: #ef9}
-	.drawBox div:nth-of-type(8){background: #c8c}
-	.drawBox button{background: #ed0;border:none;cursor: pointer;font-size: 30px;}
-	.drawBox .drawCell.active{background: #000}
+    *{margin: 0;padding: 0;box-sizing: border-box;}
+    .drawBox{width: 300px;height: 300px;border:1px solid #111;}
+    .drawBox div{ text-align: center; height: 33.333%; overflow: hidden;background: #ccc }
+    .drawBox div:nth-of-type(1){background: #ccc}
+    .drawBox div:nth-of-type(2){background: #c10}
+    .drawBox div:nth-of-type(3){background: #1a0}
+    .drawBox div:nth-of-type(4){background: #2e0}
+    .drawBox div:nth-of-type(5){background: #cd9}
+    .drawBox div:nth-of-type(6){background: #ab3}
+    .drawBox div:nth-of-type(7){background: #ef9}
+    .drawBox div:nth-of-type(8){background: #c8c}
+    .drawBox button{background: #ed0;border:none;cursor: pointer;font-size: 30px;}
+    .drawBox .drawCell.active{background: #000}
 </style>
 <body>
     <div class="drawBox" flex wrap="wrap">
-    	<div class="drawCell" data-index="0" box="4"></div>
-    	<div class="drawCell" data-index="1"  box="4"></div>
-    	<div class="drawCell" data-index="2"  box="4"></div>
-    	<div class="drawCell" data-index="7"  box="4"></div>
-    	<button box="4" id="btn">Start</button>
-    	<div class="drawCell"  data-index="3"  box="4"></div>
-    	<div class="drawCell"  data-index="6"  box="4"></div>
-    	<div class="drawCell"  data-index="5"  box="4"></div>
-    	<div class="drawCell"  data-index="4"  box="4"></div>
+        <div class="drawCell" data-index="0" box="4"></div>
+        <div class="drawCell" data-index="1"  box="4"></div>
+        <div class="drawCell" data-index="2"  box="4"></div>
+        <div class="drawCell" data-index="7"  box="4"></div>
+        <button box="4" id="btn">Start</button>
+        <div class="drawCell"  data-index="3"  box="4"></div>
+        <div class="drawCell"  data-index="6"  box="4"></div>
+        <div class="drawCell"  data-index="5"  box="4"></div>
+        <div class="drawCell"  data-index="4"  box="4"></div>
     </div>
 </body>
 <script>
-	class LuckDraw {
-		constructor(obj){
-			this.dom = document.querySelectorAll(obj);
-			this.now = this.now || 0;
-			this.count = 0;
-			this.timer = null
-			this.speed = 50
-		}
-		start(a,b){
-			this.now = ++this.now % 8;
-			this.now == 0 &&  this.count ++
-			this.dom.forEach(res=>{
-				res.dataset.index == this.now ? res.classList.add('active') : res.classList.remove('active')
-			});
-			this.timer = setTimeout(()=>{
-				this.start(a,b);
-			},this.speed) ; 
-			if(this.count > 3) this.speed+=10;
-			if(this.speed > 300 && this.now == a){
-				clearTimeout(this.timer);
-				this.count = 0;
-				this.speed = 50
-				b && b(this.now)
-			}	
-		}
-	};
+    class LuckDraw {
+        constructor(obj){
+            this.dom = document.querySelectorAll(obj);
+            this.now = this.now || 0;
+            this.count = 0;
+            this.timer = null
+            this.speed = 50
+        }
+        start(a,b){
+            this.now = ++this.now % 8;
+            this.now == 0 &&  this.count ++
+            this.dom.forEach(res=>{
+                res.dataset.index == this.now ? res.classList.add('active') : res.classList.remove('active')
+            });
+            this.timer = setTimeout(()=>{
+                this.start(a,b);
+            },this.speed) ; 
+            if(this.count > 3) this.speed+=10;
+            if(this.speed > 300 && this.now == a){
+                clearTimeout(this.timer);
+                this.count = 0;
+                this.speed = 50
+                b && b(this.now)
+            }	
+        }
+    };
 
 
-	//点击//
-	let luck = new LuckDraw('.drawCell');
-	btn.onclick = function(){
-		luck.start(3,function(a) {
-			console.log('中奖了：'+a)
-		})
-	}
+    //点击//
+    let luck = new LuckDraw('.drawCell');
+    btn.onclick = function(){
+        luck.start(3,function(a) {
+            console.log('中奖了：'+a)
+        })
+    }
 </script>
 </html>
